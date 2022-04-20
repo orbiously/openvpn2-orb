@@ -1,26 +1,26 @@
 #!/bin/bash
 
 install() {
-    case $1 in
+  case $1 in
     [Ll]inux*)
-        printf "Installing OpenVPN client for Linux\n\n"
-        sudo apt-get update
-        sudo apt-get install openvpn openvpn-systemd-resolved
-        PLATFORM=Linux
-        ;;
+      printf "Installing OpenVPN client for Linux\n\n"
+      sudo apt-get update
+      sudo apt-get install openvpn openvpn-systemd-resolved
+      PLATFORM=Linux
+      ;;
     [Dd]arwin*)
-        printf "Installing OpenVPN client for macOS\n\n"
-        HOMEBREW_NO_AUTO_UPDATE=1 brew install openvpn
-        curl https://raw.githubusercontent.com/andrewgdotcom/openvpn-mac-dns/master/etc/openvpn/update-resolv-conf --output /tmp/update-resolv-conf
-        chmod +x /tmp/update-resolv-conf
-        PLATFORM=macOS
-        ;;
+      printf "Installing OpenVPN client for macOS\n\n"
+      HOMEBREW_NO_AUTO_UPDATE=1 brew install openvpn
+      curl https://raw.githubusercontent.com/andrewgdotcom/openvpn-mac-dns/master/etc/openvpn/update-resolv-conf --output /tmp/update-resolv-conf
+      chmod +x /tmp/update-resolv-conf
+      PLATFORM=macOS
+      ;;
     msys*|MSYS*|nt|[Ww]in*|NT|WIN*)
-        printf "Installing OpenVPN client for Windows\n\n"
-        choco install openvpn
-        PLATFORM=Windows
-        ;;
-    esac
+      printf "Installing OpenVPN client for Windows\n\n"
+      choco install openvpn
+      PLATFORM=Windows
+      ;;
+   esac
 }
 
 install "$(uname)"

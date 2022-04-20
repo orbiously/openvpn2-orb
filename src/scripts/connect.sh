@@ -23,14 +23,14 @@ case $PLATFORM in
 
     for IP in $(host runner.circleci.com | awk '{ print $4; }')
       do
-      vpn_command+=(--route "$IP" 255.255.255.255 net_gateway)
-      echo "Added route to $IP/24 via default gateway"
+        vpn_command+=(--route "$IP" 255.255.255.255 net_gateway)
+        echo "Added route to $IP/24 via default gateway"
     done
 
     for SYS_RES_DNS in $(systemd-resolve --status | grep 'DNS Servers'|awk '{print $3}')
       do
-      vpn_command+=(--route "$SYS_RES_DNS" 255.255.255.255 net_gateway)
-      echo "Added route to $SYS_RES_DNS/24 via default gateway"
+        vpn_command+=(--route "$SYS_RES_DNS" 255.255.255.255 net_gateway)
+        echo "Added route to $SYS_RES_DNS/24 via default gateway"
     done
 
     "${vpn_command[@]}" --daemon --log /tmp/openvpn.log
