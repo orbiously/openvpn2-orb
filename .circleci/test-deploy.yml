@@ -46,7 +46,7 @@ workflows:
       # - command-tests-macos:
       #     requires: 
       #       - command-tests-windows
-          filters: *filters
+      #     filters: *filters
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
