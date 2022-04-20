@@ -6,3 +6,15 @@ steps:
       shell: bash
       name: OpenVPN Client - Connect
       command: <<include(scripts/connect.sh)>>
+
+  - run:
+      name: Wait for VPN connection and check public IP 
+      shell: bash
+      command: |
+        until [ -f $CLIENT_LOG ] && [ "$(grep -c "Initialization Sequence Completed" $CLIENT_LOG)" != 0 ]; do
+          sleep 1
+          echo "Attempting to connect to VPN server...";
+        done
+
+        printf "\nVPN connected\n"
+        printf "\nPublic IP is now $(curl -s http://checkip.amazonaws.com)\n"
