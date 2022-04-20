@@ -11,7 +11,8 @@ case $PLATFORM in
 
     vpn_command+=(--route 169.254.0.0 255.255.0.0 net_gateway)
     echo "Added route to 169.254.0.0/16 via default gateway"
-    if grep -q auth-user-pass /tmp/config.ovpn; then
+
+    if [ -f /tmp/vpn.login ]; then
       vpn_command+=(--auth-user-pass /tmp/vpn.login)
     fi
 
