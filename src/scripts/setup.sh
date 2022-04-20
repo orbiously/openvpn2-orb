@@ -22,17 +22,19 @@ install() {
         ;;
     esac
 }
+
 install "$(uname)"
+
 setup-Linux() {
 echo $VPN_CONFIG | base64 --decode > /tmp/config.ovpn
 
 if grep -q auth-user-pass /tmp/config.ovpn; then
-    if [ -z "${VPN_USER:-}" ] || [ -z "${VPN_PASSWORD:-}" ]; then
+  if [ -z "${VPN_USER:-}" ] || [ -z "${VPN_PASSWORD:-}" ]; then
     echo "Your VPN client is configured with a user-locked profile. Make sure to set the VPN_USER and VPN_PASSWORD environment variables"
     exit 1
-    else
+  else
     printf "%s\\n%s" > "$VPN_USER" "$VPN_PASSWORD" /tmp/vpn.login
-    fi
+  fi
 fi
 }
 
@@ -41,25 +43,27 @@ cd "/C/progra~1/OpenVPN/config" || exit
 echo $VPN_CONFIG | base64 --decode > config.ovpn
 
 if grep -q auth-user-pass config.ovpn; then
-    if [ -z "${VPN_USER:-}" ] || [ -z "${VPN_PASSWORD:-}" ]; then
+  if [ -z "${VPN_USER:-}" ] || [ -z "${VPN_PASSWORD:-}" ]; then
     echo "Your VPN client is configured with a user-locked profile. Make sure to set the VPN_USER and VPN_PASSWORD environment variables"
     exit 1
-    else
+  else
     printf "%s\\n%s" > "$VPN_USER" "$VPN_PASSWORD" /tmp/vpn.login
     sed -i 's|^auth-user-pass.*|auth-user-pass vpn\.login|' /C/PROGRA~1/OpenVPN/config/config.ovpn
-    fi
+  fi
 fi
 }
+
 setup-macOS() {
 echo $VPN_CONFIG | base64 --decode | tee /tmp/config.ovpn 1>/dev/null
+
 if grep -q auth-user-pass /tmp/config.ovpn; then
-    if [ -z "${VPN_USER:-}" ] || [ -z "${VPN_PASSWORD:-}" ]; then
+  if [ -z "${VPN_USER:-}" ] || [ -z "${VPN_PASSWORD:-}" ]; then
     echo "Your VPN client is configured with a user-locked profile. Make sure to set the VPN_USER and VPN_PASSWORD environment variables"
     exit 1
-    else
+  else
     printf "%s\\n%s" > "$VPN_USER" "$VPN_PASSWORD" /tmp/vpn.login
     sed -i config.bak 's|^auth-user-pass.*|auth-user-pass /tmp/vpn\.login|' /tmp/config.ovpn
-    fi
+  fi
 fi
 }
 setup-$PLATFORM
