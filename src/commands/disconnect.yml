@@ -1,0 +1,7 @@
+description: >
+  This command terminates the OpenVPN daemon/service, and thus disconnects the OpenVPN client.
+
+steps:
+  - run:
+      name: OpenVPN Client - Disconnect
+      command: <<include(scripts/disconnect.sh)>>
