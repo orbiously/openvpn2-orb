@@ -43,10 +43,10 @@ workflows:
           requires: 
             - command-tests-linux
           filters: *filters
-      # - command-tests-macos:
-      #     requires: 
-      #       - command-tests-windows
-      #     filters: *filters
+      - command-tests-macos:
+          requires: 
+            - command-tests-windows
+          filters: *filters
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
@@ -57,6 +57,7 @@ workflows:
             - orb-tools/pack
             - command-tests-linux
             - command-tests-windows
+            - command-tests-macos
           context: orb-publishing
           filters:
             branches:
