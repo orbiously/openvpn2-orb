@@ -6,4 +6,4 @@ until [ -f $CLIENT_LOG ] && [ "$(grep -c "Initialization Sequence Completed" $CL
 done
 
 printf "\nVPN connected\n"
-printf "\nPublic IP is now $(curl -s http://checkip.amazonaws.com)\n"
+printf "\nPublic IP is now %s\n" "$(curl http://checkip.amazonaws.com)"
