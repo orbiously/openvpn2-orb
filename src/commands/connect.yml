@@ -1,0 +1,7 @@
+description: >
+  This command starts the OpenVPN 2 client and initiates the the connection.
+
+steps:
+  - run:
+      name: OpenVPN Client - Install & Setup
+      command: <<include(scripts/connect.sh)>>
