@@ -4,5 +4,6 @@ description: >
 # Descriptions should be short, simple, and clear.
 steps:
   - run:
+      shell: bash
       name: OpenVPN Client - Install & Setup
       command: <<include(scripts/setup.sh)>>
