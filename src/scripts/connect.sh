@@ -61,7 +61,7 @@ case $PLATFORM in
       echo "route $ET_phone_home 255.255.255.255 net_gateway" >> /tmp/config.ovpn
       echo "Added route to $ET_phone_home/24 via default gateway"
 
-cat \\<< EOF | sudo tee /Library/LaunchDaemons/org.openvpn.plist 1>/dev/null
+cat << EOF | sudo tee /Library/LaunchDaemons/org.openvpn.plist 1>/dev/null
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
