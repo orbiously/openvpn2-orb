@@ -1,0 +1,8 @@
+description: >
+  This command downloads, installs, and sets up the OpenVPN 2 client.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+steps:
+  - run:
+      name: OpenVPN Client - Install & Setup
+      command: <<include(scripts/setup.sh)>>
