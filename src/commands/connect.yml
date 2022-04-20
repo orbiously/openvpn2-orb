@@ -8,6 +8,6 @@ steps:
       command: <<include(scripts/connect.sh)>>
 
   - run:
-      name: Wait for VPN connection and check public IP 
+      name: Wait for VPN connection and check public IP
       shell: bash
       command: <<include(scripts/wait.sh)>>
