@@ -4,5 +4,5 @@ description: >
   Establish a VPN connection with an OpenVPN server during your Linux (machine), macOS, or Windows jobs.
 
 display:
-  home_url: https://www.github.com/orbiously/openvpn2-orb
-  source_url: https://www.github.com/orbiously/openvpn2-orb
+  home_url: "https://github.com/orbiously/openvpn2-orb"
+  source_url: "https://github.com/orbiously/openvpn2-orb"
