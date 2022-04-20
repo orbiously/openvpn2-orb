@@ -3,5 +3,5 @@ description: >
 
 steps:
   - run:
-      name: OpenVPN Client - Install & Setup
+      name: OpenVPN Client - Connect
       command: <<include(scripts/connect.sh)>>

@@ -61,41 +61,6 @@ case $PLATFORM in
       echo "route $ET_phone_home 255.255.255.255 net_gateway" >> /tmp/config.ovpn
       echo "Added route to $ET_phone_home/24 via default gateway"
 
-cat << EOF | sudo tee /Library/LaunchDaemons/org.openvpn.plist 1>/dev/null
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict>
-    <key>Label</key>
-      <string>org.openvpn</string>
-    <key>Program</key>
-      <string>/usr/local/opt/openvpn/sbin/openvpn</string>
-    <key>ProgramArguments</key>
-    <array>
-      <string>/usr/local/opt/openvpn/sbin/openvpn</string>
-      <string>--config</string>
-      <string>/tmp/config.ovpn</string>
-      <string>--script-security</string>
-      <string>2</string>
-      <string>--up</string>
-      <string>/tmp/update-resolv-conf</string>
-      <string>--down</string>
-      <string>/tmp/update-resolv-conf</string>
-    </array>
-    <key>RunAtLoad</key>
-      <false/>
-    <key>TimeOut</key>
-      <integer>90</integer>
-    <key>StandardErrorPath</key>
-      <string>/tmp/openvpn.log</string>
-    <key>StandardOutPath</key>
-      <string>/tmp/openvpn.log</string>
-    <key>KeepAlive</key>
-      <false/>
-  </dict>
-</plist>
-EOF
-
       sudo launchctl load /Library/LaunchDaemons/org.openvpn.plist
       sudo launchctl start org.openvpn
       CLIENT_LOG=/tmp/openvpn.log
