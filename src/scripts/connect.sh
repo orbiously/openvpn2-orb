@@ -10,7 +10,9 @@ case $PLATFORM in
       --dhcp-option DOMAIN-ROUTE .)
 
     vpn_command+=(--route 169.254.0.0 255.255.0.0 net_gateway)
-    echo "Added route to 169.254.0.0/16 via default gateway"
+    if [ "$DEBUG" = "true" ]; then
+      echo "Added route to 169.254.0.0/16 via default gateway"
+    fi
 
     if [ -f /tmp/vpn.login ]; then
       vpn_command+=(--auth-user-pass /tmp/vpn.login)
@@ -18,20 +20,27 @@ case $PLATFORM in
 
     ET_phone_home=$(ss -Hnto state established '( sport = :ssh )' | head -n1 | awk '{ split($4, a, ":"); print a[1] }')
     if [ -n "$ET_phone_home" ]; then
-      vpn_command+=(--route "$phone_home" 255.255.255.255 net_gateway)
-      echo "Added route to $ET_phone_home/24 via default gateway"
+      vpn_command+=(--route "$ET_phone_home" 255.255.255.255 net_gateway)
+    fi
+
+    if [ "$DEBUG" = "true" ]; then
+        echo "Added route to $ET_phone_home/24 via default gateway"
     fi
 
     for IP in $(host runner.circleci.com | awk '{ print $4; }')
       do
         vpn_command+=(--route "$IP" 255.255.255.255 net_gateway)
-        echo "Added route to $IP/24 via default gateway"
+        if [ "$DEBUG" = "true" ]; then
+          echo "Added route to $IP/24 via default gateway"
+        fi
     done
 
     for SYS_RES_DNS in $(systemd-resolve --status | grep 'DNS Servers'|awk '{print $3}')
       do
         vpn_command+=(--route "$SYS_RES_DNS" 255.255.255.255 net_gateway)
-        echo "Added route to $SYS_RES_DNS/24 via default gateway"
+        if [ "$DEBUG" = "true" ]; then
+          echo "Added route to $SYS_RES_DNS/24 via default gateway"
+        fi
     done
 
     "${vpn_command[@]}" --daemon --log /tmp/openvpn.log
