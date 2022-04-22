@@ -14,7 +14,8 @@ jobs:
         image: ubuntu-2004:202201-02
       steps:
         - openvpn/setup
-        - openvpn/connect
+        - openvpn/connect:
+            debug: false
         - openvpn/disconnect
 
     command-tests-macos:
