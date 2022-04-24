@@ -8,7 +8,7 @@ parameters:
   timeout:
     type: integer
     default: 10
-killswitch:
+  killswitch:
     type: boolean
     default: on
 
