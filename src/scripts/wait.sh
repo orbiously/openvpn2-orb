@@ -11,7 +11,7 @@ done
 if [ ! -f "$CLIENT_LOG" ] || (! grep -iq "Initialization Sequence Completed" "$CLIENT_LOG"); then
     printf "\nUnable to establish connection within the allocated time ---> Giving up."
     if [ "$KILLSWITCH" = "on" ]; then
-      echo "VPN connection unsuccessful and Killswitch os 'on' ---> Failing the build"
+      echo "VPN connection attempt was unsuccessful and Killswitch is 'on' ---> Failing the build"
       exit 1
     fi
 else
