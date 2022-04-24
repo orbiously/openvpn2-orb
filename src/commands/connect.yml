@@ -6,11 +6,11 @@ parameters:
     type: integer
     default: 10
   killswitch:
-    type: boolean
-    default: on
-    # type: enum
-    # enum: ["on", "off"]
-    # default: "on"
+    # type: boolean
+    # default: on
+    type: enum
+    enum: ["on", "off"]
+    default: "on"
 
 steps:
   - run:
