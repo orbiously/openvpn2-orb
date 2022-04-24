@@ -15,9 +15,10 @@ jobs:
       steps:
         - openvpn/setup
         - openvpn/connect:
-            store-log: true
             killswitch: "off"
         - openvpn/disconnect
+            store-log: true
+
 
     command-tests-macos:
       macos:
