@@ -16,7 +16,7 @@ jobs:
         - openvpn/setup
         - openvpn/connect:
             killswitch: "off"
-        - openvpn/disconnect
+        - openvpn/disconnect:
             store-log: true
 
 
