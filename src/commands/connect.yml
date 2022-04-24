@@ -5,16 +5,25 @@ parameters:
   debug:
     type: boolean
     default: true
+  timeout:
+    type: integer
+    default: 10
+killswitch:
+    type: boolean
+    default: on
 
 steps:
   - run:
       shell: bash
-      name: OpenVPN Client - Connect
+      name: Connecting to OpenVPN server
       command: <<include(scripts/connect.sh)>>
       environment:
         DEBUG: << parameters.debug >>
 
   - run:
-      name: Wait for VPN connection and check public IP
+      name: Waiting for VPN connection to be established
       shell: bash
+      environment:
+        TIMEOUT: << parameters.timeout >>
+        KILLSWITCH: << parameters.killswitch >>
       command: <<include(scripts/wait.sh)>>

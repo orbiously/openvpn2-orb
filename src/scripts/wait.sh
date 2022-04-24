@@ -1,9 +1,19 @@
 #!/bin/bash
 
-until [ -f $CLIENT_LOG ] && [ "$(grep -c "Initialization Sequence Completed" $CLIENT_LOG)" != 0 ]; do
-  sleep 1
-  echo "Attempting to connect to VPN server...";
+counter=0
+until [ -f "$CLIENT_LOG" ]  && grep -iq "Initialization Sequence Completed" "$CLIENT_LOG" || [ "$counter" -eq $((TIMEOUT)) ]; do
+    sleep 1
+    ((counter++))
+    #echo $counter
+    printf "\nAttempting to connect to VPN server...\n";
 done
 
-printf "\nVPN connected\n"
-printf "\nPublic IP is now %s\n" "$(curl -s https://checkip.amazonaws.com)"
+if [ ! -f "$CLIENT_LOG" ] || (! grep -iq "Initialization Sequence Completed" "$CLIENT_LOG"); then
+    printf "\nUnable to establish connection within the allocated time. Giving up."
+    if [ "$KILLSWITCH" = "1" ]; then
+    exit 1
+    fi
+else
+    printf "\nVPN connected\n"
+    printf "\nPublic IP is now %s\n" "$(curl -s http://checkip.amazonaws.com)"
+fi
