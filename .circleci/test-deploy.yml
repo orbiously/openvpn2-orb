@@ -16,6 +16,7 @@ jobs:
         - openvpn/setup
         - openvpn/connect:
             debug: false
+            killswitch: off
         - openvpn/disconnect
 
     command-tests-macos:
