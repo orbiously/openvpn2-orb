@@ -24,7 +24,7 @@ jobs:
         xcode: "13.2.0"
       steps:
         - openvpn/setup
-        - openvpn/connect
+        - openvpn/connect:
             timeout: 3
         - openvpn/disconnect
 
@@ -34,7 +34,8 @@ jobs:
       steps:
         - openvpn/setup
         - openvpn/connect
-        - openvpn/disconnect
+        - openvpn/disconnect:
+            store-log: true
 
 workflows:
   test-deploy:
