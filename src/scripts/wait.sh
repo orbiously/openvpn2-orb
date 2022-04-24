@@ -9,9 +9,10 @@ until [ -f "$CLIENT_LOG" ]  && grep -iq "Initialization Sequence Completed" "$CL
 done
 
 if [ ! -f "$CLIENT_LOG" ] || (! grep -iq "Initialization Sequence Completed" "$CLIENT_LOG"); then
-    printf "\nUnable to establish connection within the allocated time. Giving up."
+    printf "\nUnable to establish connection within the allocated time ---> Giving up."
     if [ "$KILLSWITCH" = "on" ]; then
-    exit 1
+      echo "VPN connection unsuccessful and Killswitch os 'on' ---> Failing the build"
+      exit 1
     fi
 else
     printf "\nVPN connected\n"
