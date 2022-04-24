@@ -10,7 +10,7 @@ parameters:
     default: 10
   killswitch:
     type: boolean
-    default: on
+    default: true
 
 steps:
   - run:
