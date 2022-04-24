@@ -17,7 +17,7 @@ jobs:
         - openvpn/connect:
             killswitch: "off"
         - openvpn/disconnect:
-            store-log: true
+            store-log: false
 
 
     command-tests-macos:
@@ -27,7 +27,8 @@ jobs:
         - openvpn/setup
         - openvpn/connect:
             timeout: 3
-        - openvpn/disconnect
+        - openvpn/disconnect:
+            store-log: true
 
     command-tests-windows:
       executor:
