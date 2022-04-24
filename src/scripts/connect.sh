@@ -11,7 +11,10 @@ case $PLATFORM in
 
     vpn_command+=(--route 169.254.0.0 255.255.0.0 net_gateway)
     if [ "$DEBUG" = "1" ]; then
-      echo "Added route to 169.254.0.0/16 via default gateway"
+      echo "###########################################################"
+      echo "Staring VPN connection with the following route exclusions:"
+      echo "-----------------------------------------------------------"
+      echo "Adding route to 169.254.0.0/16 via default gateway"
     fi
 
     if [ -f /tmp/vpn.login ]; then
@@ -24,14 +27,14 @@ case $PLATFORM in
     fi
 
     if [ "$DEBUG" = "1" ]; then
-        echo "Added route to $ET_phone_home/24 via default gateway"
+        echo "Adding route to $ET_phone_home/24 via default gateway"
     fi
 
     for IP in $(host runner.circleci.com | awk '{ print $4; }')
       do
         vpn_command+=(--route "$IP" 255.255.255.255 net_gateway)
         if [ "$DEBUG" = "1" ]; then
-          echo "Added route to $IP/24 via default gateway"
+          echo "Adding route to $IP/24 via default gateway"
         fi
     done
 
@@ -39,7 +42,7 @@ case $PLATFORM in
       do
         vpn_command+=(--route "$SYS_RES_DNS" 255.255.255.255 net_gateway)
         if [ "$DEBUG" = "1" ]; then
-          echo "Added route to $SYS_RES_DNS/24 via default gateway"
+          echo "Adding route to $SYS_RES_DNS/24 via default gateway"
         fi
     done
 
@@ -50,11 +53,18 @@ case $PLATFORM in
 
   Windows)
     echo "route 169.254.0.0 255.255.0.0 net_gateway" >> "/C/PROGRA~1/OpenVPN/config/config.ovpn"
-    echo "Added route to 169.254.0.0/16 via default gateway"
+    if [ "$DEBUG" = "1" ]; then
+      echo "###########################################################"
+      echo "Staring VPN connection with the following route exclusions:"
+      echo "-----------------------------------------------------------"
+      echo "Adding route to 169.254.0.0/16 via default gateway"
+    fi
 
     ET_phone_home=$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($3, a, ":"); print a[1] }')
     echo "route $ET_phone_home 255.255.255.255 net_gateway" >> "/C/PROGRA~1/OpenVPN/config/config.ovpn"
-    echo "Added route to $ET_phone_home/24 via default gateway"
+    if [ "$DEBUG" = "1" ]; then
+      echo "Adding route to $ET_phone_home/24 via default gateway"
+    fi
 
     sc.exe create "OpenVPN Client" binPath= "C:\PROGRA~1\OpenVPN\bin\openvpnserv.exe"
     net start "OpenVPN Client"
@@ -65,11 +75,26 @@ case $PLATFORM in
     touch /tmp/openvpn.log
 
     echo "route 169.254.0.0 255.255.0.0 net_gateway" >> /tmp/config.ovpn
-    echo "Added route to 169.254.0.0/16 via default gateway"
+    if [ "$DEBUG" = "1" ]; then
+      echo "###########################################################"
+      echo "Staring VPN connection with the following route exclusions:"
+      echo "-----------------------------------------------------------"
+      echo "Adding route to 169.254.0.0/16 via default gateway"
+    fi
 
     ET_phone_home="$(netstat -an | grep '\.2222\s.*ESTABLISHED' | head -n1 | awk '{ split($5, a, "."); print a[1] "." a[2] "." a[3] "." a[4] }')"
     echo "route $ET_phone_home 255.255.255.255 net_gateway" >> /tmp/config.ovpn
-    echo "Added route to $ET_phone_home/24 via default gateway"
+    if [ "$DEBUG" = "1" ]; then
+      echo "Adding route to $ET_phone_home/24 via default gateway"
+    fi
+
+    for DNS in $(scutil --dns | grep 'nameserver\[[0-9]*\]'|sort|uniq|awk '{print $3}')
+      do
+        echo "route $DNS 255.255.255.255 net_gateway" >> /tmp/config.ovpn
+        if [ "$DEBUG" = "1" ]; then
+          echo "Adding route to $DNS/24 via default gateway"
+        fi
+    done
 
 cat << EOF | sudo tee /Library/LaunchDaemons/org.openvpn.plist 1>/dev/null
 <?xml version="1.0" encoding="UTF-8"?>
