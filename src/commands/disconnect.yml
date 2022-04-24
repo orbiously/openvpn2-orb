@@ -8,8 +8,8 @@ steps:
       command: <<include(scripts/disconnect.sh)>>
 
   - when:
-    condition: << parameters.debug >>
-    steps:
-      - store_artifacts:
-          path: /tmp/openvpn.log
-          destination: openvpn.log
+      condition: << parameters.debug >>
+      steps:
+        - store_artifacts:
+            path: /tmp/openvpn.log
+            destination: openvpn.log
