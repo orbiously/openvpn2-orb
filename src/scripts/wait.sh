@@ -10,7 +10,7 @@ done
 
 if [ ! -f "$CLIENT_LOG" ] || (! grep -iq "Initialization Sequence Completed" "$CLIENT_LOG"); then
     printf "\nUnable to establish connection within the allocated time. Giving up."
-    if [ "$KILLSWITCH" = "1" ]; then
+    if [ "$KILLSWITCH" = "on" ]; then
     exit 1
     fi
 else
