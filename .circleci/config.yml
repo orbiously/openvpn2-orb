@@ -14,9 +14,6 @@ workflows:
       - orb-tools/lint:
           filters: *filters
       - orb-tools/pack:
-          pre-steps: # steps to run before steps defined in the job bar
-            - run:
-                command: circleci version
           filters: *filters
       - orb-tools/review:
           filters: *filters
