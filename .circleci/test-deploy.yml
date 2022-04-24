@@ -15,7 +15,7 @@ jobs:
       steps:
         - openvpn/setup
         - openvpn/connect:
-            debug: false
+            store-log: true
             killswitch: "off"
         - openvpn/disconnect
 
@@ -25,6 +25,7 @@ jobs:
       steps:
         - openvpn/setup
         - openvpn/connect
+            timeout: 3
         - openvpn/disconnect
 
     command-tests-windows:
