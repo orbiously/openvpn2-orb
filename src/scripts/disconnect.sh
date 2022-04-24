@@ -18,7 +18,7 @@ case $PLATFORM in
     fi
     if [ "$DEBUG" = "1" ]; then 
         sleep 2
-        cp $CLIENT_LOG /c/tmp/openvpn.log
+        mv $CLIENT_LOG /c/tmp/openvpn.log
     fi
     ;;
   macOS)
