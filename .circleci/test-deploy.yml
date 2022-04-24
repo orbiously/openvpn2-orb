@@ -17,6 +17,7 @@ jobs:
         - openvpn/connect:
             debug: false
         - openvpn/disconnect
+        - run: circleci version
 
     command-tests-macos:
       macos:
