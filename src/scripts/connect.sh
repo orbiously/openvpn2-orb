@@ -10,7 +10,7 @@ case $PLATFORM in
       --dhcp-option DOMAIN-ROUTE .)
 
     vpn_command+=(--route 169.254.0.0 255.255.0.0 net_gateway)
-    if [ "$DEBUG" = "true" ]; then
+    if [ "$DEBUG" = "1" ]; then
       echo "Added route to 169.254.0.0/16 via default gateway"
     fi
 
@@ -23,14 +23,14 @@ case $PLATFORM in
       vpn_command+=(--route "$ET_phone_home" 255.255.255.255 net_gateway)
     fi
 
-    if [ "$DEBUG" = "true" ]; then
+    if [ "$DEBUG" = "1" ]; then
         echo "Added route to $ET_phone_home/24 via default gateway"
     fi
 
     for IP in $(host runner.circleci.com | awk '{ print $4; }')
       do
         vpn_command+=(--route "$IP" 255.255.255.255 net_gateway)
-        if [ "$DEBUG" = "true" ]; then
+        if [ "$DEBUG" = "1" ]; then
           echo "Added route to $IP/24 via default gateway"
         fi
     done
@@ -38,7 +38,7 @@ case $PLATFORM in
     for SYS_RES_DNS in $(systemd-resolve --status | grep 'DNS Servers'|awk '{print $3}')
       do
         vpn_command+=(--route "$SYS_RES_DNS" 255.255.255.255 net_gateway)
-        if [ "$DEBUG" = "true" ]; then
+        if [ "$DEBUG" = "1" ]; then
           echo "Added route to $SYS_RES_DNS/24 via default gateway"
         fi
     done
