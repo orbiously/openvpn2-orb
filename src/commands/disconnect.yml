@@ -2,20 +2,20 @@ description: >
   This command terminates the OpenVPN daemon/service, and thus disconnects the OpenVPN client.
 
 parameters:
-  debug:
+  store-log:
     type: boolean
-    default: true
+    default: false
 
 steps:
   - run:
       name: Disconnecting OpenVPN Client & Cleaning up
       shell: bash
       environment:
-        DEBUG: << parameters.debug >>
+        DEBUG: << parameters.store-log >>
       command: <<include(scripts/disconnect.sh)>>
 
   - when:
-      condition: << parameters.debug >>
+      condition: << parameters.store-log >>
       steps:
         - store_artifacts:
             path: /tmp/openvpn.log

@@ -2,9 +2,6 @@ description: >
   This command starts the OpenVPN 2 client and initiates the the connection.
 
 parameters:
-  debug:
-    type: boolean
-    default: true
   timeout:
     type: integer
     default: 10
@@ -18,8 +15,6 @@ steps:
       shell: bash
       name: Connecting to OpenVPN server
       command: <<include(scripts/connect.sh)>>
-      environment:
-        DEBUG: << parameters.debug >>
 
   - run:
       name: Waiting for VPN connection to be established
