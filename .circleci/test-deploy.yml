@@ -25,8 +25,7 @@ jobs:
         xcode: "13.2.0"
       steps:
         - openvpn/setup
-        - openvpn/connect:
-            timeout: 3
+        - openvpn/connect
         - openvpn/disconnect:
             store-log: true
 
