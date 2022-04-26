@@ -38,9 +38,9 @@ jobs:
         - openvpn/disconnect:
             store-log: true
 
-    command-tests-docker
+    command-tests-docker:
       docker:
-      - image: cimg/base:2022.03
+        - image: cimg/base:2022.03
       steps:
         - openvpn/setup
 
@@ -57,6 +57,10 @@ workflows:
       - command-tests-macos:
           requires: 
             - command-tests-windows
+          filters: *filters
+      - command-tests-docker:
+          requires: 
+            - command-tests-macos
           filters: *filters
       - orb-tools/pack:
           filters: *filters
