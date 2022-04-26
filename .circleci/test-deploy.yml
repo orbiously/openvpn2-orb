@@ -38,6 +38,12 @@ jobs:
         - openvpn/disconnect:
             store-log: true
 
+    command-tests-docker
+      docker:
+      - image: cimg/base:2022.03
+      steps:
+        - openvpn/setup
+
 workflows:
   test-deploy:
     jobs:
