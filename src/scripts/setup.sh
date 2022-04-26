@@ -3,6 +3,11 @@
 install() {
   case $1 in
     [Ll]inux*)
+      if [ -f /.dockerenv ]; then
+        printf "OpenVPN cannot be set up with the 'docker' executor\n"
+        printf "Please use the Linux 'machine' executor"
+        exit 1
+      fi
       printf "Installing OpenVPN client for Linux\n\n"
       sudo apt-get update
       sudo apt-get install openvpn openvpn-systemd-resolved
